@@ -1,0 +1,61 @@
+<style>
+  .card-bg-img-2 {
+    height: 400px;
+  }
+</style>
+
+<section class="section">
+  <div class="container">
+  <?php if(sizeof($attachments) == 3 || sizeof($attachments) == 2):?>
+
+    <?php if($block->dataValue('title')):?>
+      <h3 class="title is-3"><?php echo $block->dataValue('title');?></h3>
+    <?php endif;?>
+    <div class="columns">
+      <?php for($i = 1; $i <= sizeof($attachments); $i++){ ?>
+        <div class="column">
+          <div class="card" style="border:none;">
+           
+              <?php
+                $url='';
+                if($attachments[$i-1]):
+                  $media = $attachments[$i-1]->media();
+                  $item = $media->item();
+                  $url = $media->originalUrl();
+                  if($media):
+                    if(sizeof($attachments) <= 2):
+                      $url = $media->originalUrl();
+                      $url = str_replace('http:', '', $url);
+                    else:
+                      $url = $media->originalUrl();
+                      $url = str_replace('http:', '', $url);
+                    endif;
+                    if(strpos($url, '.tif') !== false):
+                      $url = $media->thumbnailUrl('large');
+                    endif;  
+                  endif;
+                endif;
+              ?>
+              <div class="figure card-bg-img-<?php echo sizeof($attachments);?>"
+                style="background:url(<?php echo  $url;?>) no-repeat center 20%;background-color:#7fb5b2;background-size: cover;"
+                >
+                <?php if($item->value('dcterms:source')):?>
+                <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                <?php endif;?>
+              </div>
+              <?php if($attachments[$i-1]->caption()):?>
+            <figcaption><?php echo $attachments[$i-1]->caption();?></figcaption>
+                <?php else:?>
+            <figcaption><?php echo $block->dataValue('text'.$i);?></figcaption>
+          <?php endif;?>
+          </div>
+        </div>
+      <?php } ?>
+    </div>
+    <?php else:?>
+      <p>
+        Om dit blok te gebruiken moet je minstens 2 afbeeldingen (attachments) selecteren.
+      </p>
+    <?php endif;?>
+</div>
+</section>

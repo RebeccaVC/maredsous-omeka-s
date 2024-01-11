@@ -31,6 +31,11 @@ class ItemWithMetadata extends AbstractBlockLayout
         $defaultSettings = $services->get('Config')['blockplus']['block_settings']['itemWithMetadata'];
         $blockFieldset = \BlockPlus\Form\ItemWithMetadataFieldset::class;
 
+        $defaults = [
+            'heading' => '',
+            'column' => 'One',
+        ];
+
         $data = $block ? $block->data() + $defaultSettings : $defaultSettings;
 
         $dataForm = [];
@@ -57,6 +62,7 @@ class ItemWithMetadata extends AbstractBlockLayout
 
         $vars = [
             'heading' => $block->dataValue('heading', ''),
+            'column' => $block->dataValue('column', 'One'),
             'attachments' => $attachments,
         ];
         $template = $block->dataValue('template', self::PARTIAL_NAME);

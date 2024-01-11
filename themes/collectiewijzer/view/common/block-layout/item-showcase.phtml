@@ -1,4 +1,4 @@
-<div class="item-showcase">
+<!-- <div class="item-showcase">
 <?php foreach ($attachments as $attachment): ?>
     <div class="item resource">
     <?php
@@ -27,4 +27,52 @@
     <?php endif; ?>
     </div>
 <?php endforeach; ?>
-</div>
+</div> -->
+
+<style>
+.heading::after{
+    content: " — ";
+    color:ad3e3f;
+    font-family: 'Montserrat', sans-serif;
+    font-size: xx-large;
+}
+.heading-white::after{
+    content: " — ";
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: xx-large;
+}
+</style>
+<?php
+$media = $attachment->media();
+$oUrl = $media->originalUrl(); 
+$originalUrl = str_replace('http://', 'https://', $oUrl);
+
+?>
+<?php if(!$embed):?>
+<section class="section" style="background-color: <?php echo $colour; ?>;">
+    <?php if($heading):?>
+    <div class="text-center heading<?php if($colour == 'ad3e3f'): ?>-white<?php endif;?>">
+        <h5 class="title" <?php if($colour == 'ad3e3f'): ?>style="color: white;"<?php endif;?>><?php echo $heading; ?></h5>
+    </div>
+    <?php endif;?>    
+    <div class="justify-content-center d-flex">
+        <iframe src="<?php echo $originalUrl; ?>" style="width: 800px; height: 600px;" allowfullscreen="true">
+        </iframe>
+    </div>
+</section>
+<?php endif;?>
+
+<?php if($embed):?>
+<section class="section" style="background-color: <?php echo $colour; ?>;">
+    <?php if($heading):?>
+    <div class="text-center heading<?php if($colour == 'ad3e3f'): ?>-white<?php endif;?>">
+        <h5 class="title" <?php if($colour == 'ad3e3f'): ?>style="color: white;"<?php endif;?>><?php echo $heading; ?></h5>
+    </div>
+    <?php endif;?>    
+    <div class="justify-content-center d-flex">
+        <a href="<?php echo $originalUrl; ?>" target="_blank">PDF
+        </a>
+    </div>
+</section>
+<?php endif;?>

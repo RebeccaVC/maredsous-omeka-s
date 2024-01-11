@@ -1,0 +1,181 @@
+<?php
+$translate = $this->plugin('translate');
+?>
+<style>
+.figure {
+    position: relative;
+  }
+.figure img {
+    display:block;
+  }
+.figure a {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+.card, .card-footer {
+    border: none;
+}
+.btn {
+    border-radius: 0%;
+}
+div[class="card-title"]::after {
+    content: " — ";
+    color:ad3e3f;
+}
+.title{
+    font-family: 'Montserrat', sans-serif;
+    color: ad3e3f;
+}
+.heading::after{
+    content: " — ";
+    color:ad3e3f;
+    font-family: 'Montserrat', sans-serif;
+    font-size: xx-large;
+}
+</style>
+
+<?php
+$url = $this->serverUrl(true);
+$lan = preg_replace('/.*maredsous-(en|nl|fr)\/page.*/','${1}',$url);
+switch ($lan){
+  case "nl":
+    $viewerTekst = 'Toon in de viewer';
+    $readMore = 'Lees meer';
+    break;
+  case "fr":
+    $viewerTekst = 'Voir avec notre visualiseur';
+    $readMore = 'Lire la suite';
+    break;
+  case "en":
+    $viewerTekst = 'Go to the viewer';
+    $readMore = 'Read more';
+    break;
+  default:
+    $taal = "";
+}
+?>
+
+<!-- <?php if($this->column !== 'one'): ?>
+<section>
+    <div class="container">
+        <div class="row">
+            <?php foreach($attachments as $attachment): ?>
+                <?php 
+                $item = $attachment->item();
+                $source = $item->value('dcterms:source');
+                $media = $item->media();    
+                ?>
+                <div class="col-md-6 col-12 g-5">
+                    <div class="card h-100">
+                    <figure class="figure">
+                    <img src="<?php echo $media[0]->thumbnailUrl('square'); ?>" class="card-img-top img-fluid">
+                    <a href="<?php echo $source; ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                  </figure>
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $item->displayTitle(); ?></h5>
+                            <p class="card-text"><?php echo $item->displayDescription(); ?></p>
+                        </div>
+                        <div class="card-footer justify-content-md-end" style="padding:0%; border:none;">
+                          <figure class="image is-48x48">
+                            <img src="<?php echo $this->assetUrl('img/pijltje.png'); ?>">
+                          </figure>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>  
+    </div>
+</section>
+<?php endif;?> -->
+
+<?php if($this->column == 'one'): ?>
+<section class="section" style="background-color: white;">
+<?php if($this->heading):?>
+        <div class="text-center heading">
+            <h5 class="title"><?php echo $this->heading; ?></h5>
+        </div>
+    <?php endif;?>
+    <div class="container">
+        <div class="row justify-content-evenly">
+            <?php foreach($attachments as $attachment): ?>
+                <?php 
+                $item = $attachment->item();
+                $media = $item->media();    
+                ?>
+                <div class="col-md-3 col-12 g-5">
+                    <div class="card h-100">
+                        <div class="is-rounded image">
+                            <img src="<?php echo $media[0]->thumbnailUrl('square'); ?>" class="is-rounded card-img-top img-fluid">
+                        </div>
+                        
+
+                        <div class="card-body justify-content-md-center text-center">
+                            <div class="card-title">
+                            <h5 class="title is-5"><?php echo $item->displayTitle(); ?></h5>
+                            <?php if($item->value('dcterms:alternative')):?>
+                            <h6 class="title is-6"><?php echo $item->value('dcterms:alternative'); ?></h6>
+                            <?php endif;?>
+                            </div>
+                            
+                            <p class="card-text"><?php echo $item->displayDescription(); ?></p>
+
+                        </div>
+                        <div class="text-center">
+                        <a href="<?php echo $item->value('dcterms:source');?>" class="btn" style="border-color: ad3e3f;color:ad3e3f;"><?php echo $readMore;?></a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>  
+    </div>
+</section>
+<?php endif;?>
+
+<?php if($this->column !== 'one'): ?>
+<section class="section" style="background-color: white;">
+<?php if($this->heading):?>
+        <div class="text-center heading">
+            <h5 class="title"><?php echo $this->heading; ?></h5>
+        </div>
+    <?php endif;?>
+    <div class="container">
+        <div class="row">
+            <?php foreach($attachments as $attachment): ?>
+                <?php 
+                $item = $attachment->item();
+                $media = $item->media();
+                $volume = str_replace('Volume ', '',$item->value('dcterms:title'));    
+                ?>
+                <div class="col-md-3 col-12 g-5">
+                    <div class="card h-100">
+                        <div class="is-rounded image">
+                            <img src="<?php echo $media[0]->thumbnailUrl('square'); ?>" class=" is-rounded card-img-top img-fluid">
+                        </div>
+                        
+
+                        <div class="card-body justify-content-md-center text-center">
+                            <div class="card-title">
+                            <h5 class="title is-5"><?php echo $item->displayTitle(); ?></h5>
+                            <h6 class="title is-6"><?php echo $item->value('dcterms:alternative'); ?></h6>
+                            </div>
+                            
+                            <p class="card-text"><?php echo $item->displayDescription(); ?></p>
+
+                        </div>
+                        <div class="text-center">
+                        <a href="/s/maredsous-<?php echo $lan;?>/page/digitale_editie_<?php echo $volume;?>" class="btn" style="border-color: ad3e3f;color:ad3e3f;"><?php echo $readMore;?></a>
+                        </div>
+                        <div class="card-footer justify-content-center text-center">
+                          
+                          <a class="btn" target="_blank" href="<?php echo $item->value('dcterms:source'); ?>" style="background-color: ad3e3f; color:white;border:none;"><img src="<?php echo $this->assetUrl('img/eye2.png'); ?>" style="padding-bottom:2%;"> <span><?php echo $viewerTekst;?></span></a>
+                          
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>  
+    </div>
+</section>
+<?php endif;?>

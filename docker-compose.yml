@@ -5,12 +5,12 @@ services:
   omeka-s:
     build: ./
     ports:
-      - "9018:80"
+      - "9019:80"
     volumes:
-      - ./modules/:/var/www/html/tdc/modules/
-      - ./themes/:/var/www/html/tdc/themes/
-      - ./files/:/var/www/html/tdc/files/
-      - ./config/:/var/www/html/tdc/config/
-      - ./htaccess:/var/www/html/tdc/.htaccess
-      - ./imagemagick-policy.xml:/var/www/html/tdc/imagemagick-policy.xml
+      - ./modules/:/var/www/html/maredsous/modules/
+      - ./themes/:/var/www/html/maredsous/themes/
+      - ./files/:/var/www/html/maredsous/files/
+      - ./config/:/var/www/html/maredsous/config/
+      - ./htaccess:/var/www/html/maredsous/.htaccess
+      - ./imagemagick-policy.xml:/var/www/html/maredsous/imagemagick-policy.xml
     restart: "no"

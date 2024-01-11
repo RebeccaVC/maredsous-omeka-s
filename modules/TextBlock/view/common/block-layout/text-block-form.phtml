@@ -17,6 +17,23 @@ use Zend\Form\Element\Textarea;
   }
 ?>
 <?php echo $this->formRow($textarea);?>
+<?php if(isset($block)):
+  $quote = $block->dataValue('quote');
+else:
+  $quote = 0;
+endif;?>
+<div class="field">
+  <div class="field-meta">
+      <label>Quote</label>
+      <a href="#" class="expand" aria-label="Expand" title="Expand"></a>
+      <div class="collapsible">
+        <div class="field-description">Changes text into a big central quote. This only applies to the above textbox. The optional text below will be disregarded.</div>
+      </div>
+  </div>
+<div class="inputs">
+    <input type="checkbox" class="" value="quote" <?php echo ($quote == 'quote' ? 'checked' : '') ?> name="o:block[__blockIndex__][o:data][quote]">
+</div>
+</div>
 
 <h4>Text (optional)</h4>
 This creates an extra column<br>
@@ -25,6 +42,17 @@ This creates an extra column<br>
   $textarea->setAttribute('class', 'block-html full wysiwyg');
   if ($block) {
       $textarea->setAttribute('value', $block->dataValue('text2'));
+  }
+?>
+<?php echo $this->formRow($textarea);?>
+
+<h4>Text (optional)</h4>
+This creates an extra third column<br>
+<?php
+  $textarea = new Textarea("o:block[__blockIndex__][o:data][text3]");
+  $textarea->setAttribute('class', 'block-html full wysiwyg');
+  if ($block) {
+      $textarea->setAttribute('value', $block->dataValue('text3'));
   }
 ?>
 <?php echo $this->formRow($textarea);?>

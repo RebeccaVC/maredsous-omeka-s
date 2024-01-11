@@ -2,7 +2,7 @@
 $escape = $this->plugin('escapeHtml');
 $siteTitle = $site->title();
 $this->htmlElement('html')->setAttribute('lang', $this->lang());
-$this->htmlElement('html')->setAttribute('class', "has-navbar-fixed-top");
+//$this->htmlElement('html')->setAttribute('class', "has-navbar-fixed-top");
 
 $this->headMeta()->setCharset('utf-8');
 $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1');
@@ -22,13 +22,134 @@ $this->headScript()->prependFile($this->assetUrl('vendor/jquery/jquery.min.js', 
 
 $this->trigger('view.layout');
 $userBar = $this->userBar();
+$url = $this->serverUrl(true);
+if (strpos($url, 'page/home') !== false) {
+    $home = true;
+}else{
+  $home = false;
+}
+if (strpos($url, 'page/digitale_editie_') !== false) {
+  $vol = true;
+}else{
+$vol = false;
+}
+$lan = preg_replace('/.*maredsous-(en|nl|fr)\/page.*/','${1}',$url);
+$navs = [];
+switch ($lan){
+  case "nl":
+    $taal = "Nederlands";
+    $titleSite = 'HET BREVIER VAN<br> GERAARDSBERGEN';
+    $navs = ['Credits', 'Partners', 'Home', 'Stories', 'Digitale editie', 'Brevier van Geraardsbergen', '15de eeuws Meesterwerk', 'Onderzoek en Conservatie'];
+    $tekstBanner = 'Het Brevier van de heilige Adrianus van Geraardsbergen, vandaag
+    bewaard in de Abdij van Maredsous, dateert van 1450, toen het
+    graafschap Vlaanderen in handen was van Filips de Goede, hertog
+    van Bourgondië. Het Brevier is een sleutelwerk voor de kennis van de Vlaamse miniatuurschilderkunst van het midden van de vijftiende eeuw.';
+    $bannerTitle = 'Een Bourgondisch handschrift';
+    $bannerSubtitle = 'bewaard in de Abdij van Maredsous';
+    $footerViewerTekst = 'Bekijk het volume in onze online viewer';
+    $readMore = 'Lees meer';
+    break;
+  case "fr":
+    $taal = "Français";
+    $titleSite = 'LE BRÉVIAIRE<br> DE GRAMMONT';
+    $navs = ['Colophon', 'Partenaires', 'Home', 'Histoires', 'Édition numérique', 'Le bréviaire de Saint-Adrien de Grammont', 'Un chef d’œuvre du XVe siècle', 'Recherche & conservation'];
+    $tekstBanner = 'Le Bréviaire de Saint-Adrien de Grammont, aujourd’hui conservé à l’abbaye de Maredsous, a vu le jour vers 1450, alors que le comté de Flandre était aux mains de Philippe le Bon, duc de Bourgogne. Le Bréviaire est une œuvre-clé pour la connaissance de la miniature flamande du milieu du XVe siècle.';
+    $bannerTitle = 'Un manuscrit d’époque bourguignonne';
+    $bannerSubtitle = 'conservé à l’abbaye de Maredsous';
+    $footerViewerTekst = 'Voir le volume avec notre visualiseur en ligne';
+    $readMore = 'Lire la suite';
+    break;
+  case "en":
+    $taal = "English";
+    $titleSite = 'THE BREVIARY OF<br> GERAARDSBERGEN';
+    $navs = ['Credits', 'Partners', 'Home', 'Stories', 'Digital edition', 'Breviary of Geraardsbergen', 'A 15th-century masterpiece', 'Research & Conservation'];
+    $tekstBanner = 'The Breviary of St Adrian of Geraardsbergen, nowadays kept at Maredsous Abbey, dates from 1450, when the County of Flanders was ruled by Philip the Good, Duke of Burgundy. The Breviary is a key work for the knowledge of Flemish miniature painting of the mid-fifteenth century.';
+    $bannerTitle = 'A Burgundian manuscript';
+    $bannerSubtitle = 'kept at Maredsous Abbey';
+    $footerViewerTekst = 'View the volume in our online viewer';
+    $readMore = 'Read more';
+    break;
+  default:
+    $taal = "";
+}
 ?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 <!-- Add the slick-theme.css if you want default styling -->
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <!-- Add the slick-theme.css if you want default styling -->
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 <?php echo $this->doctype(); ?>
 <?php echo $this->htmlElement('html'); ?>
+<style>
+  .nav-link {
+    text-decoration: underline;
+    color: white;
+    display: initial;
+  }
+  .nav-link:hover{
+    color:black;
+  }
+  .footer-section-2 .nav-link{
+    color: black;
+  }
+  .card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+    padding-top: 0%;
+  }
+  section{
+    font-family: 'Bitter', serif;
+  }
+  .container .title{
+    font-family: 'Montserrat', sans-serif;
+    color: ad3e3f;
+  }
+  .shadow {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  .hero .slick-slider{
+    border:none;
+  }
+  .slick-dots li button::before{
+    font-size: 20px;
+    color: white;
+  }
+  .slick-dots li.slick-active button::before{
+    color: white;
+  }
+  .footer div.col-2{
+    height: 75px;
+  }
+  .footer div.col-2 div{
+    height: 120px;
+  }
+  .footer div.col-2 img{
+    max-height: 100%;
+  }
+  .clickable{
+    cursor: pointer;
+  }
+  .small-nav {
+    display: none;
+  }
+  @media (max-width:600px){
+    .nav-link {
+      width: 100% !important;
+      display: block !important;
+      text-decoration: none !important;
+      text-align: center !important;
+    }
+    .hide-small{
+      display: none !important;
+    }
+    .small-nav{
+      display: block !important;
+    }
+  }
+</style>
     <head>
         <?php echo $this->headMeta(); ?>
         <?php echo $this->headTitle(); ?>
@@ -41,133 +162,272 @@ $userBar = $this->userBar();
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
      crossorigin="">
+     <link href="https://fonts.googleapis.com/css2?family=Bitter&family=Montserrat:wght@600&display=swap" rel="stylesheet"> 
 
 
     </head>
 
     <?php echo $this->htmlElement('body'); ?>
     <?php echo $userBar; ?>
-    <header>
-        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-          <div class="container">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="<?php echo $site->url(); ?>">
-              <?php if ($this->themeSetting('logo')): ?>
-                  <img src="<?php echo $this->themeSettingAssetUrl('logo'); ?>" alt="<?php echo $escape($siteTitle); ?>" />
-              <?php else: ?>
-                  <?php echo $escape($siteTitle); ?>
-              <?php endif; ?>
-            </a>
 
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-          </div>
-          <div class="navbar-menu">
-            <div class="navbar-start">
 
-            </div>
-            <div class="navbar-end">
-              <div class="navbar-item">
-                <?php
-                  echo $site->publicNav()->menu()->renderMenu(null, [
-                      'maxDepth' => $this->themeSetting('nav_depth') - 1
-                  ]);
-                ?>
-              </div>
-               <div class="navbar-item">
-                 <button class="button is-primary" id="showSearch">
-                    <span class="icon is-small">
-                      <i class="fas fa-search"></i>
-                    </span>
-                  </button>
+    <section class="section" style="background-color: #ad3e3f;" style="padding:5%;">
+    <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups" style="padding-right:5%;">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/credits"><?php echo $navs[0];?></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/partners"><?php echo $navs[1];?></a>
+      </li>
+    </ul>
+    <div class="btn-group small-nav" role="group" aria-label="Third group">
+  <button id="btnGroupDrop1" type="button" class="button is-rounded dropdown-toggle" style="background-color: transparent;" data-bs-toggle="dropdown" aria-expanded="false">
+    <p style="color:white;"><?php echo $taal;?></p></button>
+    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <li><a class="dropdown-item" href="/s/maredsous-nl/">Nederlands</a></li>
+      <li><a class="dropdown-item" href="/s/maredsous-fr/">Français</a></li>
+      <li><a class="dropdown-item" href="/s/maredsous-en/">English</a></li>
+    </ul>
+  </div>
+    </div>
+    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="padding-left: 5%; padding-right:5%; padding-top:1%;">
+  <div class="btn-group me-2" role="group" aria-label="First group">
+<h1 class="title is-3" style="color:white;font-family: 'Montserrat', sans-serif;"><?php echo $titleSite;?></h1>
+  </div>
+  <div class="btn-group me-2" role="group" aria-label="Second group">
+  <div class="nav justify-content-center">
+    <ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/home"><?php echo $navs[2];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/stories"><?php echo $navs[3];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/digitale_editie"><?php echo $navs[4];?></a>
+  </li>
+</ul>
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link"href="/s/maredsous-<?php echo $lan;?>/page/brevier"><?php echo $navs[5];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/meesterwerk"><?php echo $navs[6];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/onderzoek"><?php echo $navs[7];?></a>
+  </li>
+</ul>
                 </div>
-             </div>
-          </div>
-        </div>
-      </nav>
+  </div>
+  <div class="btn-group hide-small" role="group" aria-label="Third group">
+  <button id="btnGroupDrop1" type="button" class="button is-rounded dropdown-toggle" style="background-color: transparent;" data-bs-toggle="dropdown" aria-expanded="false">
+    <p style="color:white;"><?php echo $taal;?></p></button>
+    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <li><a class="dropdown-item" href="/s/maredsous-nl/">Nederlands</a></li>
+      <li><a class="dropdown-item" href="/s/maredsous-fr/">Français</a></li>
+      <li><a class="dropdown-item" href="/s/maredsous-en/">English</a></li>
+    </ul>
+  </div>
+</div>
+    </section>
 
-    </header>
+    <?php if($home): ?>
+    <section class="hero is-primary" style="background-color:ad3e3f;">
+        <div class="hero-overlay single-item">
+          <?php for ($i = 1; $i <= 4; $i++) {
+          $hero = 'img/hero' . $i . '.jpg';  
+          ?>
+          <div class="hero-body" style="background:url('<?php echo $this->assetUrl($hero); ?>') no-repeat center center;background-size: cover;">
+            <div class="container">
+              <div class="columns">
+                <div class="column is-1 logo-column">
+                  <?php if ($this->themeSetting('logo')): ?>
+                      <img src="<?php echo $this->themeSettingAssetUrl('logo'); ?>" alt="<?php echo $escape($siteTitle); ?>" />
+                  <?php endif; ?>
+                </div>
+                <div class="column is-6 shadow">
+                  <h1 class="title is-1"><?php echo $bannerTitle; ?></h1>
+                  <h2 class="subtitle is-4"><?php echo $bannerSubtitle; ?></h2>
+                  <?php if($home):?>
+                    <div class="hero-text">
+                      <div class="content">
+                        <p>
+                        <?php echo $tekstBanner;?>
+                        </p>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary is-square" style="background-color: ad3e3f;border-radius:0%; border-color:ad3e3f;margin-top:2%;"><a href="/s/maredsous-<?php echo $lan;?>/page/brevier"><?php echo $readMore;?></a></button>
+                  <?php endif;?>
+                </div>
+              </div>
+            </div>
+           </div>
+          <?php } ?>
+         </div>
+      </section>
+  <?php endif; ?>
+
     <?php echo $this->content; ?>
-    <footer class="footer">
-      <div class="section footer-section">
+
+    <footer class="footer" style="background-color:ad3e3f;">
+    <?php if($vol):
+    $case = substr($url,-1);
+    switch ($case){
+      case "1":
+        $mira = "https://resolver.libis.be/IE16535501/representation";
+        break;
+      case "2":
+        $mira = "https://resolver.libis.be/IE16539691/representation";
+        break;
+      case "3":
+        $mira = "https://resolver.libis.be/IE16537325/representation";
+        break;
+      case "4":
+        $mira = "https://resolver.libis.be/IE16541421/representation";
+        break;
+      default:
+        $mira = "";
+    }
+    ?>
+
+<section class="text-center" style="height: 100px;">
+<div style="padding-top:1%;"><img src="<?php echo $this->assetUrl("img/eye2.png");?>"></div>
+<div><a href="<?php echo $mira;?>" target="_blank"><?php echo $footerViewerTekst;?></a></div>
+</section>
+<?php endif;?>
+      <div class="section footer-section" style="background-color: eae6e0;height:150px;">
         <div class="container">
           <nav class="level">
-              <!-- Left side -->
-              <div class="level-left">
-                <div class="level-item">
-                  <a href="" class="button is-primary"><span class="icon"><i class="fab fa-facebook"></i></span></a>
-                </div>
-                <div class="level-item">
-                  <a href="" class="button is-primary"><span class="icon"><i class="fab fa-twitter"></i></span></a>
-                </div>
-                <div class="level-item">
-                  <a href="" class="button is-primary"><span class="icon"><i class="fab fa-instagram"></i></span></a>
-                </div>
-              </div>
+          <div class="row">
+          <div class="col-2 align-items-center justify-content-center d-flex">
+<div>
+<img class="clickable" id="abdij" alt="Abdij van Maredsous" src="<?php echo $this->assetUrl("img/01_Maredsous.png");?>" />
+  </div>
+</div>
 
-              <!-- Right side -->
-              <div class="level-right">
-                <p class="level-item"><?php if ($footerContent = $this->themeSetting('footer')): ?>
-                <?php echo $footerContent; ?>
-                <?php else: ?>
-                    <?php echo $this->translate('Powered by Omeka S'); ?>
-                <?php endif; ?></p>
-              </div>
+  <div class="col-2 align-items-center justify-content-center d-flex">
+
+      <img class="clickable" id="KUL" alt="KU Leuven" src="<?php echo $this->assetUrl("img/02_index.png");?>" />
+
+  </div>
+  <div class="col-2 align-items-center justify-content-center d-flex">
+
+      <img class="clickable" id="IRPAKIK" alt="IRPAKIK" src="<?php echo $this->assetUrl("img/03_images.png");?>" />
+
+  </div>
+  <div class="col-2 align-items-center justify-content-center d-flex">
+
+<img class="clickable" id="illuminare" alt="Illuminare" src="<?php echo $this->assetUrl("img/04_illuminare.png");?>" />
+
+</div>
+  <div class="col-2 align-items-center justify-content-center d-flex">
+
+      <img class="clickable" id="koning" alt="Koning Boudewijnstichting" src="<?php echo $this->assetUrl("img/05.png");?>" />
+
+  </div>
+  <div class="col-2 align-items-center justify-content-center d-flex">
+
+      <img class="clickable" id="fonds" alt="Fonds Baillet Latour" src="<?php echo $this->assetUrl("img/06.png");?>" />
+
+  </div>
+</div>
             </nav>
 
         </div>
       </div>
-      <div class="section footer-section-2" style="padding: 1.5rem 0;">
-          <div class="has-text-right"><a href="https://vlaanderen.be/" target="_blank"><img src="<?php echo $this->assetUrl('img/logo-vo.svg'); ?>" alt="Met steun van de Vlaamse overheid" width="150" height=""></a></div>
-
+      <div class="section footer-section-2" style="padding: 1.5rem 0;background-color:f3f0ec; color:black;">
+      <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups" style="padding-left: 5%; padding-right:5%;">
+      <div class="btn-group me-2" role="group" aria-label="First group">
+      <h1 class="title is-5" style="font-family: 'Montserrat', sans-serif; color:black;"><?php echo $titleSite;?></h1>
+  </div>
+  <div class="btn-group me-2" role="group" aria-label="Second group">
+  <div class="nav justify-content-center">
+    <ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/home"><?php echo $navs[2];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/stories"><?php echo $navs[3];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/digitale_editie"><?php echo $navs[4];?></a>
+  </li>
+</ul>
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link"href="/s/maredsous-<?php echo $lan;?>/page/brevier"><?php echo $navs[5];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/meesterwerk"><?php echo $navs[6];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/onderzoek"><?php echo $navs[7];?></a>
+  </li>
+</ul>
+<ul class="nav small-nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/credits"><?php echo $navs[0];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/partners"><?php echo $navs[1];?></a>
+  </li>
+  </ul>
+  <ul class="nav small-nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="https://libis.be/">© KU Leuven, built by LIBIS</a>
+  </li>
+</ul>
+                </div>
+  </div>
+  <div class="btn-group hide-small" role="group" aria-label="Third group">
+  <ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/credits"><?php echo $navs[0];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/s/maredsous-<?php echo $lan;?>/page/partners"><?php echo $navs[1];?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" style="text-decoration: none;" href="https://libis.be/">© KU Leuven, built by LIBIS</a>
+  </li>
+</ul>
+</div>
       </div>
+                </div>
     </footer>
 
-
-    <div class="search-menu modal">
-      <div class="modal-background"></div>
-        <div class="modal-content">
-          <?php echo $this->partial('common/search-form'); ?>
-        </div>
-        <button class="search-menu-close modal-close is-large"></button>
-     </div>
-
-     <div class="burger-menu modal">
-       <div class="modal-background"></div>
-         <div class="modal-content">
-           <!-- Any other Bulma elements you want -->
-           <?php echo $this->partial('common/search-form'); ?>
-           <?php
-             echo $site->publicNav()->menu()->renderMenu(null, [
-                 'maxDepth' => $this->themeSetting('nav_depth') - 1
-             ]);
-           ?>
-         </div>
-         <button class="burger-menu-close modal-close is-large"></button>
-      </div>
       <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   </body>
   <script>
   $(document).ready(function() {
-    // Check for click events on the navbar burger icon
-    $(".navbar-burger").click(function() {
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-        //$(".navbar-burger").toggleClass("is-active");
-        $(".burger-menu").toggleClass("is-active");
+    $("#abdij").click(function() {
+  window.open('https://www.maredsous.com','_blank');
     });
-
-    $("#showSearch").click(function() {
-    $(".search-menu").addClass("is-active");
+    $("#KUL").click(function() {
+  window.open('https://www.kuleuven.be/kuleuven/','_blank');
     });
-
-    $(".search-menu-close").click(function() {
-       $(".search-menu").removeClass("is-active");
+    $("#IRPAKIK").click(function() {
+  window.open('https://www.kikirpa.be/','_blank');
     });
-    $(".burger-menu-close").click(function() {
-       $(".burger-menu").removeClass("is-active");
+    $("#illuminare").click(function() {
+  window.open('http://www.illuminare.be/','_blank');
+    });
+    $("#koning").click(function() {
+  window.open('https://kbs-frb.be/','_blank');
+    });
+    $("#fonds").click(function() {
+  window.open('https://www.fondsbailletlatour.com/','_blank');
+    });
+    $(".divtest").slick();
+    $('.single-item').slick({
+      dots: true,
+      autoplay: true,
+      autoplaySpeed: 5000,
+      fade: true,
+      cssEase: 'linear',
+      arrows: false
     });
   });
   </script>

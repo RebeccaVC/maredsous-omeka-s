@@ -1,7 +1,9 @@
 <?php
 use Zend\Form\Element\Textarea;
+use Omeka\Form\Element\Asset;
 
 echo $this->blockAttachmentsForm($block);
+
 ?>
 <h4>Title</h4>
 <div class="field">
@@ -30,7 +32,7 @@ endif;?>
       <label>Reverse</label>
       <a href="#" class="expand" aria-label="Expand" title="Expand"></a>
       <div class="collapsible">
-        <div class="field-description">Move text to the left and image to the right (with green overlay)</div>
+        <div class="field-description">Move text to the right and image to the left.</div>
       </div>
   </div>
   <div class="inputs">
@@ -38,19 +40,114 @@ endif;?>
   </div>
 </div>
 <?php if(isset($block)):
+  $citaat = $block->dataValue('citaat');
+else:
+  $citaat = 0;
+endif;?>
+<div class="field">
+  <div class="field-meta">
+      <label>Quote</label>
+      <a href="#" class="expand" aria-label="Expand" title="Expand"></a>
+      <div class="collapsible">
+        <div class="field-description">Changes the text above into a big quote. This differs from inline text quotes.</div>
+      </div>
+  </div>
+  <div class="inputs">
+      <input type="checkbox" class="" value="citaat" <?php echo ($citaat == 'citaat' ? 'checked' : '') ?> name="o:block[__blockIndex__][o:data][citaat]">
+  </div>
+</div>
+<?php if(isset($block)):
+  $cited = $block->dataValue('cited');
+else:
+  $cited = '';
+endif;?>
+<div class="field">
+  <div class="field-meta">
+      <label>Cited (optional)</label>
+      <a href="#" class="expand" aria-label="Expand" title="Expand"></a>
+      <div class="collapsible">
+        <div class="field-description">Enter who the quote is by.</div>
+      </div>
+  </div>
+  <div class="inputs">
+      <input type="textarea" class="" value="<?php echo $cited;?>" name="o:block[__blockIndex__][o:data][cited]">
+  </div>
+</div>
+
+<?php if(isset($block)):
   $itemurl = $block->dataValue('itemurl');
 else:
   $itemurl = '';
 endif;?>
 <div class="field">
   <div class="field-meta">
-      <label>Link image to item?</label>
+      <label>Add link to the image?</label>
       <a href="#" class="expand" aria-label="Expand" title="Expand"></a>
       <div class="collapsible">
-        <div class="field-description">Add a link to the item related to the image/attachment</div>
+        <div class="field-description">This adds a link to the image in the form of square button on the bottom-right of the image. The link must be entered in the dc:source field of the item.</div>
       </div>
   </div>
   <div class="inputs">
       <input type="checkbox" class="" value="itemurl" <?php echo ($itemurl == 'itemurl' ? 'checked' : '') ?> name="o:block[__blockIndex__][o:data][itemurl]">
   </div>
+</div>
+<?php if(isset($block)):
+  $button = $block->dataValue('button');
+else:
+  $button = 0;
+endif;?>
+<div class="field">
+  <div class="field-meta">
+      <label>Make link a button?</label>
+      <a href="#" class="expand" aria-label="Expand" title="Expand"></a>
+      <div class="collapsible">
+        <div class="field-description">Changes a link in the text above into a button.</div>
+      </div>
+  </div>
+<div class="inputs">
+    <input type="checkbox" class="" value="button" <?php echo ($button == 'button' ? 'checked' : '') ?> name="o:block[__blockIndex__][o:data][button]">
+</div>
+</div>
+<?php if(isset($block)):
+  $fit = $block->dataValue('fit');
+else:
+  $fit = 0;
+endif;?>
+<div class="field">
+  <div class="field-meta">
+      <label>Image from border?</label>
+      <a href="#" class="expand" aria-label="Expand" title="Expand"></a>
+      <div class="collapsible">
+        <div class="field-description">Adds some padding between the edge and the image.</div>
+      </div>
+  </div>
+<div class="inputs">
+    <input type="checkbox" class="" value="fit" <?php echo ($fit == 'fit' ? 'checked' : '') ?> name="o:block[__blockIndex__][o:data][fit]">
+</div>
+</div>
+<?php if(isset($block)):
+  $dimensie = $block->dataValue('dimensie');
+else:
+  $dimensie = 0;
+endif;?>
+<div class="field">
+  <div class="field-meta">
+      <label>Use image's original ratio?</label>
+  </div>
+  <div class="inputs">
+    <input type="checkbox" class="" value="dimensie" <?php echo ($dimensie == 'dimensie' ? 'checked' : '') ?> name="o:block[__blockIndex__][o:data][dimensie]">
+  </div>
+</div>
+<?php if(isset($block)):
+  $layout = $block->dataValue('layout');
+else:
+  $layout = 0;
+endif;?>
+<div class="inputs">
+      <select type="text" class="" name="o:block[__blockIndex__][o:data][layout]">
+        <option <?php if($layout == 'bol'):?>selected="selected" <?php endif; ?> value="bol">Bol</option>
+        <option <?php if($layout == 'normaal'):?>selected="selected" <?php endif; ?>value="normaal">Normaal (taupe)</option>
+        <option <?php if($layout == 'gewoon'):?>selected="selected" <?php endif; ?> value="gewoon">Normaal (wit)</option>
+        <option <?php if($layout == 'rood'):?>selected="selected" <?php endif; ?> value="rood">Normaal (rood)</option>
+      </select>
 </div>

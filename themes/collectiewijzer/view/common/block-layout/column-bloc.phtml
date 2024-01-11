@@ -1,0 +1,45 @@
+<section class="section">
+  <div class="container">
+  <!-- overview blocks -->
+  <?php if(sizeof($attachments) == 3 || sizeof($attachments) == 2):?>
+
+    <?php if($block->dataValue('title')):?>
+      <h3 class="title is-3"><?php echo $block->dataValue('title');?></h3>
+    <?php endif;?>
+    <div class="row justify-content-evenly">
+      <?php for($i = 1; $i <= sizeof($attachments); $i++){ ?>
+        <div class="col-md-4 col-sm-12">
+          <?php
+            $url=''; 
+            if($attachments[$i-1]):
+              $media = $attachments[$i-1]->media();
+              $item = $attachments[$i-1]->item();
+              if($media):
+                if(sizeof($attachments) <= 2):
+                  $url = $media->thumbnailUrl('square');
+                  $url = str_replace('http:', '', $url);
+                  $oUrl = $media->originalUrl();
+                else:
+                  $url = $media->thumbnailUrl('square');
+                  $url = str_replace('http:', '', $url);
+                endif;
+              endif;
+            endif;
+          ?>
+          <figure class="figure">
+            <img src="<?php echo $oUrl;?>">
+            <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+          </figure>
+          <?php if($attachments[$i-1]->caption()):?>
+            <figcaption><?php echo $attachments[$i-1]->caption();?></figcaption>
+          <?php endif;?>
+        </div>
+      <?php } ?>
+    </div>
+    <?php else:?>
+      <p>
+        Om dit blok te gebruiken moet je minstens 2 afbeeldingen (attachments) selecteren.
+      </p>
+    <?php endif;?>
+</div>
+</section>

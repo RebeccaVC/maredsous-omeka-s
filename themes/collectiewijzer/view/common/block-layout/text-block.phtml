@@ -1,0 +1,53 @@
+<style>
+  blockquote{
+    background-color: initial;
+    margin-left: 1.50rem;
+    padding: 1.25rem 5rem;
+    font-family: 'Montserrat', sans-serif;
+    color: ad3e3f;
+  }
+  blockquote::after{
+    content:" — ";
+  }
+</style>
+<?php if($block->dataValue('text')):?>
+<section class="section">
+<?php else:?>
+<section class="section" style="padding-bottom:20px;">
+<?php endif?>
+<?php if($block->dataValue('quote')):?>
+  <div class="container">
+    <blockquote class="text-center">
+      <?php echo $block->dataValue('text');?>
+    </blockquote>
+  </div>
+  <?php else:?>
+    <div class="container">
+      <?php if($block->dataValue('title')):?>
+        <h3 class="title is-5" style="padding-left: 5%;"><?php echo $block->dataValue('title');?></h3>
+      <?php endif;?>
+      <div class="columns">
+        <?php if($block->dataValue('text') && !$block->dataValue('text2')):?>
+          <div class="column is-two-thirds" style="padding-left: 5%;">
+            <?php echo $block->dataValue('text');?>
+          </div>
+        <?php endif;?>
+        <?php if($block->dataValue('text') && $block->dataValue('text2')):?>
+          <div class="columns">
+            <div class="column" style="padding-left: 5%;">
+              <?php echo $block->dataValue('text');?>
+            </div>
+            <div class="column">
+              <?php echo $block->dataValue('text2');?>
+            </div>
+            <?php if($block->dataValue('text3')): ?>
+            <div class="column">
+              <?php echo $block->dataValue('text3');?>
+            </div>
+          <?php endif;?>
+          </div>
+        <?php endif;?>
+      </div>    
+    </div>
+    <?php endif;?>
+</section>

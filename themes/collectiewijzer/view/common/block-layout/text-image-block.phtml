@@ -1,0 +1,522 @@
+<style>
+  .figure {
+    position: relative;
+  }
+  .figure img {
+    display:block;
+  }
+  .figure a {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  figcaption {
+    color: ad3e3f;
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 1.25rem;
+  }
+  figcaption::after{
+    content: " — ";
+  }
+  .content blockquote {
+    background-color: initial;
+    border-left-width: 3px;
+    border-bottom: none;
+    margin-left: 1.50rem;
+    padding: 1.25rem 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+    color: ad3e3f;
+    border-color: ad3e3f;
+  }
+  .red blockquote {
+    color: white;
+    border-color: white;
+  }
+  .content blockquote::after{
+    content: "";
+  }
+  section{
+    font-family: 'Bitter', serif;
+  }
+  .fit-content {
+    max-width: fit-content;
+  }
+  .container .title{
+    font-family: 'Montserrat', sans-serif;
+    color: ad3e3f;
+    padding-top: 3%;
+  }
+  .container .title-white{
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 3%;
+  }
+  .container .content{
+    padding-top: 3%;
+  }
+  a[class="btn"]{
+    color: ad3e3f;
+    background-color: white;
+  }
+  a[class="btn btn-red"]{
+    color: white;
+    background-color: ad3e3f;
+  }
+  quote::before{
+    content: open-quote;
+    font-size: xx-large;
+  }
+  cite{
+    color: black;
+    border-bottom: 2px solid #ad3e3f;
+    padding-bottom: 10px;
+    font-style: normal;
+  }
+  cite::after{
+    content: "        ";
+    border-bottom: 2px solid #ad3e3f;
+    padding-bottom: 10px;
+  }
+  /* cite::before{
+    content: " —  ";
+  } */
+  quote{
+    font-family: 'Montserrat', sans-serif;
+    color: ad3e3f;
+    display: block;
+  }
+  .btn{
+    border-radius: 0%;
+  }
+  @media (max-width: 770px){
+    .col-6, .col-4{
+      width: 100% !important;
+    }
+  }
+</style>
+<?php if(!$block->dataValue('citaat')):?>
+<?php if($block->dataValue('layout') == 'normaal'):?>
+<section class="section">
+    <div style="background-color: ede8da;">
+      <div class="container <?php if(!$block->dataValue('fit')):?>fit-content<?php endif;?>" style="<?php if(!$block->dataValue('reverse')):?>padding-right:0%; padding-left:5%;<?php else:?>padding-left:0%; padding-right:5%;<?php endif;?>">
+      <div class="row"  style="background-color: ede8da;">
+        <?php if(!$block->dataValue('reverse')):?>
+          <div class="col-6">
+            <?php if($block->dataValue('title')):?>
+            <h2 class="title is-3"><?php echo $block->dataValue('title');?></h2>
+            <?php endif;?>
+            <div class="content">
+              <?php echo $block->dataValue('text');?>
+            </div>
+          </div>
+          <div class="col-6 has-text-right">
+            <?php if($attachments):
+              $item = $attachments[0]->item();
+              $media = $attachments[0]->media();
+              if($media):
+                if($block->dataValue('dimensie')):
+                  $url = $media->originalUrl();
+                else:
+                  $url = $media->thumbnailUrl('square');
+                  $url = str_replace('http:', '', $url);
+                endif;
+                if($block->dataValue('itemurl')):
+                  ?>
+                  <figure class="figure">
+                    <img src="<?php echo $url;?>">
+                    <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                  </figure>
+                <?php else:?>
+                  <img src="<?php echo $url;?>">
+                <?php endif;?>
+              <?php endif;?>
+              <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?>
+            <?php endif;?>
+          </div>
+        <?php else:?>
+          <div class="col-6">
+            <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                if($block->dataValue('dimensie')):
+                  $url = $media->originalUrl();
+                else:
+                  $url = $media->thumbnailUrl('square');
+                  $url = str_replace('http:', '', $url);
+                endif;
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="figure">
+                    <img src="<?php echo $url;?>">
+                    <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                  </figure>
+                <?php else:?>
+                  <img src="<?php echo $url;?>">
+                <?php endif;?>
+              <?php endif;?>
+              <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?>
+            <?php endif;?>
+          </div>
+          <div class="col-6">
+          <?php if($block->dataValue('title')):?>
+            <h2 class="title is-3"><?php echo $block->dataValue('title');?></h2>
+            <?php endif;?>
+            <div class="content">
+              <?php echo $block->dataValue('text');?>
+            </div>
+          </div>
+        <?php endif;?>
+      </div>
+  </div>
+            </div>
+</section>
+<? endif;?>
+
+<?php if($block->dataValue('layout') == 'bol'):?>
+<section class="section" style="background-color:white;">
+  <div class="container">
+    <div class="row">
+    <?php if(!$block->dataValue('reverse')):?>
+      <div class="col-8" style="padding-left: 5%;">
+      <?php if($block->dataValue('title')):?>
+            <h2 class="title is-4"><?php echo $block->dataValue('title');?></h2>
+            <?php endif;?>
+            <div class="content white">
+              <?php echo $block->dataValue('text');?>
+            </div>
+          </div>
+          <div class="col-3">
+      <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                $url = $media->thumbnailUrl('square');
+                $url = str_replace('http:', '', $url);
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="image">
+                  <a href="<?php echo $itemUrl;?>"><img src="<?php echo $url;?>" class="is-rounded"></a>
+                </figure>
+                <?php else:?>
+                  <figure class="image">
+                    <img src="<?php echo $url;?>" class="is-rounded">
+                  </figure>
+                <?php endif;?>
+              <?php endif;?>
+              <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?>
+            <?php endif;?>
+          </div>
+          <? else:?>
+            <div class="col-3" style="padding-left: 5%;">
+      <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                $url = $media->thumbnailUrl('square');
+                $url = str_replace('http:', '', $url);
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="image">
+                  <a href="<?php echo $itemUrl;?>"><img src="<?php echo $url;?>" class="is-rounded"></a>
+                </figure>
+                <?php else:?>
+                  <figure class="image">
+                    <img src="<?php echo $url;?>" class="is-rounded">
+                  </figure>
+                <?php endif;?>
+              <?php endif;?>
+              <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?>
+            <?php endif;?>
+          </div>
+            <div class="col-8">
+            <?php if($block->dataValue('title')):?>
+            <h2 class="title is-4"><?php echo $block->dataValue('title');?></h2>
+            <?php endif;?>
+            <div class="content white">
+              <?php echo $block->dataValue('text');?>
+            </div>
+          </div>
+          <?php endif; ?>
+      </div>
+      </div>
+</section>
+<?php endif;?>
+
+<?php if($block->dataValue('layout') == 'gewoon'):?>
+<section class="section" style="background-color:white;">
+  <div class="container">
+    <div class="row">
+    <?php if(!$block->dataValue('reverse')):?>
+      <div class="col-6" style="padding-left: 5%;">
+      <?php if($block->dataValue('title')):?>
+            <h2 class="title is-3"><?php echo $block->dataValue('title');?></h2>
+            <?php endif;?>
+            <div class="content white">
+              <?php echo $block->dataValue('text');?>
+            </div>
+          </div>
+          <div class="col-4 has-text-right">
+      <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                if($block->dataValue('dimensie')):
+                  $url = $media->originalUrl();
+                else:
+                  $url = $media->thumbnailUrl('square');
+                  $url = str_replace('http:', '', $url);
+                endif;
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="figure">
+                    <img src="<?php echo $url;?>">
+                    <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                  </figure>
+                <?php else:?>
+                  <figure class="image">
+                    <img src="<?php echo $url;?>">
+                  </figure>
+                <?php endif;?>
+              <?php endif;?>
+              <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?>
+            <?php endif;?>
+          </div>
+          <? else:?>
+            <div class="col-4" style="padding-left: 5%;">
+      <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                if($block->dataValue('dimensie')):
+                  $url = $media->originalUrl();
+                else:
+                  $url = $media->thumbnailUrl('square');
+                  $url = str_replace('http:', '', $url);
+                endif;
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="figure">
+                    <img src="<?php echo $url;?>">
+                    <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                  </figure>
+                <?php else:?>
+                  <figure class="image">
+                    <img src="<?php echo $url;?>">
+                  </figure>
+                <?php endif;?>
+              <?php endif;?>
+              <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?>
+            <?php endif;?>
+          </div>
+            <div class="col-6">
+            <?php if($block->dataValue('title')):?>
+            <h2 class="title is-3"><?php echo $block->dataValue('title');?></h2>
+            <?php endif;?>
+            <div class="content white">
+              <?php echo $block->dataValue('text');?>
+            </div>
+          </div>
+          <?php endif; ?>
+      </div>
+      </div>
+</section>
+<?php endif;?>
+
+<?php if($block->dataValue('layout') == 'rood'):?>
+<section style="color: white;">
+    <div style="background-color: ad3e3f;">
+      <div class="container <?php if(!$block->dataValue('fit')):?>fit-content<?php endif;?>">
+      <div class="row">
+        <?php if(!$block->dataValue('reverse')):?>
+          <div class="col-6" style="padding-left: 5%;">
+            <?php if($block->dataValue('title')):?>
+            <h2 class="title title-white is-3"><?php echo $block->dataValue('title');?></h2>
+            <?php endif;?>
+            <div class="content red">
+              <?php echo $block->dataValue('text');?>
+            </div>
+          </div>
+          <div class="col-6 has-text-right" style="padding-right: 0%;">
+            <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                if($block->dataValue('dimensie')):
+                  $url = $media->originalUrl();
+                else:
+                  $url = $media->thumbnailUrl('square');
+                  $url = str_replace('http:', '', $url);
+                endif;
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="figure">
+                  <img src="<?php echo $url;?>">
+                  <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                </figure>
+                <?php else:?>
+                  <img src="<?php echo $url;?>">
+                <?php endif;?>
+              <?php endif;?>
+              <!-- <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?> -->
+            <?php endif;?>
+          </div>
+        <?php else:?>
+          <div class="col-6" style="padding-left: 0%;">
+            <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                if($block->dataValue('dimensie')):
+                  $url = $media->originalUrl();
+                else:
+                  $url = $media->thumbnailUrl('square');
+                  $url = str_replace('http:', '', $url);
+                endif;
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="figure">
+                  <img src="<?php echo $url;?>">
+                  <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                </figure>
+                <?php else:?>
+                  <img src="<?php echo $url;?>">
+                <?php endif;?>
+              <?php endif;?>
+              <!-- <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?> -->
+            <?php endif;?>
+          </div>
+          <div class="col-6">
+            <?php if($block->dataValue('title')):?>
+            <h2 class="title title-white is-3"><?php echo $block->dataValue('title');?></h2>
+            <?php endif;?>
+            <div class="content red">
+              <?php echo $block->dataValue('text');?>
+            </div>
+          </div>
+        <?php endif;?>
+      </div>
+  </div>
+            </div>
+</section>
+<?php endif; ?>
+<?php endif;?>
+
+<?php if($block->dataValue('citaat')): ?>
+<section class="section" style="background-color: <?php if($block->dataValue('layout') == 'normaal'):?>ede8da<?php else:?>white<?php endif;?>; padding-top:5%; padding-bottom:5%;">
+<div class="container" style="padding-left: 5%; padding-right:5%;">
+    <div class="row">
+    <?php if(!$block->dataValue('reverse')):?>
+      <div class="col-6">
+            
+            <quote class="content">
+            <h2 class="title is-5"><?php echo $block->dataValue('text');?></h2>
+            <cite><?php echo $block->dataValue('cited');?></cite>
+            </quote>
+            
+          </div>
+          <div class="col-6 has-text-right">
+      <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                $url = $media->thumbnailUrl('square');
+                $url = str_replace('http:', '', $url);
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="figure">
+                    <img src="<?php echo $url;?>">
+                    <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                  </figure>
+                <?php else:?>
+                  <figure class="image">
+                    <img src="<?php echo $url;?>">
+                  </figure>
+                <?php endif;?>
+              <?php endif;?>
+              <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?>
+            <?php endif;?>
+          </div>
+          <? else:?>
+            <div class="col-6">
+      <?php if($attachments):
+              $media = $attachments[0]->media();
+              $item = $attachments[0]->item();
+              if($media):
+                $url = $media->thumbnailUrl('square');
+                $url = str_replace('http:', '', $url);
+                if($block->dataValue('itemurl')):
+                  $itemUrl = $media->item()->url();
+                  $itemUrl = str_replace('http:', '', $itemUrl);
+                  ?>
+                  <figure class="figure">
+                    <img src="<?php echo $url;?>">
+                    <a href="<?php echo $item->value('dcterms:source'); ?>" target="_blank"><img src="<?php echo $this->assetUrl('img/plusje.png'); ?>" class="is-48x48 image"></a>
+                  </figure>
+                <?php else:?>
+                  <figure class="image">
+                    <img src="<?php echo $url;?>">
+                  </figure>
+                <?php endif;?>
+              <?php endif;?>
+              <?php if($attachments[0]->caption()):?>
+            <figcaption><?php echo $attachments[0]->caption();?></figcaption>
+            <?php endif;?>
+            <?php endif;?>
+          </div>
+            <div class="col-6">
+            <quote class="content">
+            <h2 class="title is-5"><?php echo $block->dataValue('text');?></h2>
+            <cite><?php echo $block->dataValue('cited');?></cite>
+            </quote>
+
+          </div>
+          <?php endif; ?>
+      </div>
+      </div>
+</section>
+<?php endif; ?>
+
+<?php if($block->dataValue('button')):?>
+<script>
+  $('div.content p a').addClass("btn");
+  <?php if(($block->dataValue('layout') == 'gewoon') || ($block->dataValue('layout') == 'bol')):?>
+    $('div.white p a').addClass("btn-red");
+  <?php endif;?>
+</script>
+<?php endif; ?>

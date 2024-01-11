@@ -1,0 +1,94 @@
+<?php
+$translate = $this->plugin('translate');
+?>
+<style>
+    /* .g-5{
+        --bs-gutter-x:5rem;
+    } */
+    .card-taupe{
+        background-color: ede8da;
+    }
+    .card-title{
+        font-family: 'Montserrat', sans-serif;
+        color: ad3e3f;
+    }
+    .title{
+        font-family: 'Montserrat', sans-serif;
+        color: ad3e3f;
+    }
+    .heading::after{
+    content: " — ";
+    color:ad3e3f;
+    font-family: 'Montserrat', sans-serif;
+    font-size: xx-large;
+    }
+</style>
+<?php if($this->column !== 'one'): ?>
+<section class="section">
+    <?php if($this->heading):?>
+    <div class="text-center heading">
+        <h5 class="title"><?php echo $this->heading; ?></h5>
+    </div>
+    <?php endif;?>
+    <div class="container">
+        <div class="row justify-content-evenly">
+            <?php foreach($attachments as $attachment): ?>
+                <?php 
+                $item = $attachment->item();
+                $media = $item->media();    
+                ?>
+                <div class="<?php echo $this->column; ?> col-12 g-5">
+                    <div class="card card-taupe h-100">
+                        <img src="<?php echo $media[0]->thumbnailUrl('square'); ?>" class="card-img-top img-fluid">
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $item->displayTitle(); ?></h5>
+                            <p class="card-text"><?php echo $item->displayDescription(); ?></p>
+                        </div>
+                        <div class="card-footer justify-content-md-end" style="padding:0%; border:none;">
+                          <figure class="image is-48x48">
+                            <a href="<?php echo $item->value('dcterms:source'); ?>"><img src="<?php echo $this->assetUrl('img/pijltje.png'); ?>"></a>
+                          </figure>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>  
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if($this->column == 'one'):?>
+<section class="section">
+    <?php if($this->heading):?>
+        <div class="text-center" style="padding: 5% 1%;">
+            <h5 class="title"><?php echo $this->heading; ?></h5>
+        </div>
+    <?php endif;?>
+    <div class="container">
+    <?php foreach($attachments as $attachment): ?>
+                <?php 
+                $item = $attachment->item();
+                $media = $item->media();    
+                ?>
+        <div class="row" style="padding:2% 0%;">
+                <div class="col-4 offset-4">
+                    <div class="card card-taupe h-100">
+                        <img src="<?php echo $media[0]->thumbnailUrl('square'); ?>" class="card-img-top img-fluid">
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $item->displayTitle(); ?></h5>
+                            <p class="card-text"><?php echo $item->displayDescription(); ?></p>
+                        </div>
+                        <div class="card-footer justify-content-md-end" style="padding:0%; border:none;">
+                          <figure class="image is-48x48">
+                            <a href="<?php echo $item->value('dcterms:source'); ?>"><img src="<?php echo $this->assetUrl('img/pijltje.png'); ?>"></a>
+                          </figure>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php endif;?>

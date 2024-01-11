@@ -69,6 +69,8 @@ class ItemShowcase extends AbstractBlockLayout
             'thumbnailType' => $block->dataValue('thumbnail_type', 'square'),
             'showTitleOption' => $block->dataValue('show_title_option', 'item_title'),
             'heading' => $block->dataValue('heading', ''),
+            'colour' => $block->dataValue('colour', 'white'),
+            'embed' => $block->dataValue('embed'),
         ];
         $template = $block->dataValue('template', self::PARTIAL_NAME);
         return $template !== self::PARTIAL_NAME && $view->resolver($template)

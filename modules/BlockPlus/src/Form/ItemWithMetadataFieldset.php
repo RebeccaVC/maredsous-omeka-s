@@ -20,6 +20,20 @@ class ItemWithMetadataFieldset extends Fieldset
                 ],
             ])
             ->add([
+                'name' => 'o:block[__blockIndex__][o:data][column]',
+                'type' => Element\Select::class,
+                'options' => [
+                    'label' => 'Number of columns', // @translate
+                    'info' => 'Choose the number of columns. This is only applicable to the item-with-metadata-other template. It will have not effect on Default (which is a carrousel) or volumes (which is a fixed layout)',
+                    'value_options' => [
+                        'one' => 'One column', // @translate
+                        'col-md-5' => 'Two columns', // @translate
+                        'col-md-4' => 'Three columns', // @translate
+                        'col-md-3' => 'Four columns', // @translate
+                    ],
+                ],
+            ])
+            ->add([
                 'name' => 'o:block[__blockIndex__][o:data][template]',
                 'type' => TemplateSelect::class,
                 'options' => [

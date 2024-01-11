@@ -1,31 +1,68 @@
 <?php
 $translate = $this->plugin('translate');
 ?>
-<div class="item-with-metadata">
-<?php foreach($attachments as $attachment): ?>
-    <?php $item = $attachment->item(); ?>
-    <?php if (empty($item)) continue; ?>
-    <div class="resource show">
-    <?php echo $item->displayValues(); ?>
-    <?php if($item->itemSets()): ?>
-        <div class="property">
-            <h4><?php echo $translate('Item sets'); ?></h4>
-            <?php foreach ($item->itemSets() as $itemSet): ?>
-            <div class="value"><?php echo $itemSet->link($itemSet->displayTitle()); ?></div>
-            <?php endforeach; ?>
+<style>
+    .title{
+        font-family: 'Montserrat', sans-serif;
+        color: ad3e3f;
+    }
+    .slick-prev::before{
+        content: "《 ";
+        color:ad3e3f;
+    }
+    .slick-next::before{
+        content: "》";
+        color:ad3e3f;
+    }
+    .slick-arrow{
+        background: none;
+    }
+    @media (max-width: 770px) {
+        .slick-arrow {
+            display: none !important;
+        }
+    }
+</style>
+<section>
+    <?php if($this->heading): ?>
+        <div class="text-center" style="padding: 5% 1%;">
+            <h5 class="title"><?php echo $this->heading; ?></h5>
         </div>
-    <?php endif; ?>
-    <?php if($item->media()): ?>
-        <div class="media-list">
-        <?php
-        foreach ($item->media() as $media):
-            echo $media->linkRaw($this->thumbnail($media, 'medium', ['title' => $media->displayTitle()]), null, [
-                'class' => 'media resource'
-            ]);
-        endforeach;
-        ?>
+    <?php endif;?>
+    <div class="container carrousel" style="border:none;">
+    <?php foreach($attachments as $attachment): ?>
+                <?php 
+                $item = $attachment->item();
+                $media = $item->media();    
+                ?>
+        <div class="row justify-content-center d-flex">
+
+                <div class="col-md-5" style="padding:0% 5%;">
+                    <div class="card h-100" style="background-color: white;">
+
+                        <img src="<?php echo $media[0]->thumbnailUrl('square'); ?>" class="card-img-top img-fluid">
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $item->displayTitle(); ?></h5>
+                            <p class="card-text"><?php echo $item->displayDescription(); ?></p>
+                        </div>
+                        <div class="card-footer justify-content-md-end" style="padding:0%; border:none;">
+                          <figure class="image is-48x48">
+                            <a href="<?php echo $item->value('dcterms:source'); ?>"><img src="<?php echo $this->assetUrl('img/pijltje.png'); ?>"></a>
+                          </figure>
+                        </div>
+                    </div>
+                </div>
+ 
         </div>
-    <?php endif; ?>
+        <?php endforeach; ?>   
     </div>
-<?php endforeach; ?>
-</div>
+</section>
+
+<script>
+    $(document).ready(function() {
+        $(".carrousel").slick({
+            slidesToShow: 1
+        });
+    });
+</script>
